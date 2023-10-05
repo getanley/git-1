@@ -1,0 +1,70 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const contactForm = document.getElementById("contactForm");
+    const firstNameInput = document.getElementById("firstName");
+    const lastNameInput = document.getElementById("lastName");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const submitButton = document.getElementById("submitBtn");
+    const successMessage = document.getElementById("successMessage");
+
+    // Function to check if the input value is valid
+    function isValidInput(input) {
+        return input.checkValidity();
+    }
+
+    // Function to show or hide error messages
+    function displayError(input, errorElement, message) {
+        if (!isValidInput(input)) {
+            input.classList.add("invalid");
+            errorElement.textContent = message;
+        } else {
+            input.classList.remove("invalid");
+            errorElement.textContent = "";
+        }
+    }
+
+   
+    function updateSubmitButton() {
+        if (isValidInput(firstNameInput) && isValidInput(lastNameInput) && isValidInput(emailInput) && isValidInput(passwordInput)) {
+            submitButton.removeAttribute("disabled");
+        } else {
+            submitButton.setAttribute("disabled", "true");
+        }
+    }
+
+    Event listeners for input fields
+    firstNameInput.addEventListener("input", function () {
+        displayError(firstNameInput, document.getElementById("firstNameError"), "Please enter your first name.");
+        updateSubmitButton();
+    });
+
+    lastNameInput.addEventListener("input", function () {
+        displayError(lastNameInput, document.getElementById("lastNameError"), "Please enter your last name.");
+        updateSubmitButton();
+    });
+
+    emailInput.addEventListener("input", function () {
+        displayError(emailInput, document.getElementById("emailError"), "Please enter a valid email address.");
+        updateSubmitButton();
+    });
+
+    passwordInput.addEventListener("input", function () {
+        displayError(passwordInput, document.getElementById("passwordError"), "Please enter a valid password.");
+        updateSubmitButton();
+    });
+
+    
+    contactForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        if (isValidInput(firstNameInput) && isValidInput(lastNameInput) && isValidInput(emailInput) && isValidInput(passwordInput)) {
+            // Form submission logic here (e.g., AJAX request or form submission)
+            
+            successMessage.textContent = "Form submitted successfully!";
+            successMessage.style.color = "green";
+        }
+    });
+});
+
+
+
+
